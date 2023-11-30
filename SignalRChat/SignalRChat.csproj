@@ -228,7 +228,6 @@
     <Content Include="Scripts\ui\jquery.ui.mouse.js" />
     <Content Include="Scripts\ui\jquery.ui.resizable.js" />
     <Content Include="Scripts\ui\jquery.ui.widget.js" />
-    <Content Include="TextFile_101.txt" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
