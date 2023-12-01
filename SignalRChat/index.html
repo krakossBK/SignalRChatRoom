@@ -74,7 +74,6 @@
         var divChatWindow = document.getElementById('divChatWindow');
 
 
-
         $(function () {
             setScreen(false);
             // Declare a proxy to reference the hub.
@@ -135,14 +134,29 @@
         function delayJS(time) {
             return new Promise(resolve => setTimeout(resolve, time));
         }
+        function alert_custom(content) {
+            if (document.getElementById('idAlertCustom') !== null)
+                document.getElementById('idAlertCustom').remove();
+            let disc = document.createElement('div');
+            disc.setAttribute('id', 'idAlertCustom');
+            disc.classList.add('alert-connect-user');
+            disc.innerHTML = content;
+            hideDisplay(disc);
+            document.body.prepend(disc);
+            fadeInJS(disc);
+            delayJS(2000).then(() => faedOutJS(disc));
+            if (document.getElementById('idAlertCustom') !== null)
+                delayJS(4050).then(() => document.getElementById('idAlertCustom').remove());
+        }
 
         function registerEvents(chatHub) {
             btnStartChat.addEventListener('click', function (event) {
                 console.log('Произошло событие', event.type);
                 if (nickName.value.length > 0)
                     chatHub.server.connect(nickName.value);
-                else
-                    alert("Укажите Ваше имя");
+                else {
+                    alert_custom('Укажите Ваше имя');
+                }
 
             }, false);
 
@@ -155,17 +169,19 @@
                     txtMessage.value = '';
                 }
             }, false);
-
-            nickName.addEventListener('keypress', function (e) {
-                if (e.which == 13) {
+            nickName.addEventListener("keyup", function (event) {
+                event.preventDefault();
+                var code = event.keyCode || event.which;
+                //Enter keycode == 13
+                if (code == 13)
                     btnStartChat.click();
-                }
             });
-
-            txtMessage.addEventListener('keypress', function (e) {
-                if (e.which == 13) {
+            txtMessage.addEventListener("keyup", function (event) {
+                event.preventDefault();
+                var code = event.keyCode || event.which;
+                //Enter keycode == 13
+                if (code == 13)
                     btnSendMsg.click();
-                }
             });
         }
 
@@ -179,11 +195,16 @@
                 // Add All Users
                 for (i = 0; i < allUsers.length; i++) {
                     AddUser(chatHub, allUsers[i].ConnectionId, allUsers[i].UserName);
+                    //if (userId != allUsers[i].ConnectionId)
+                    //    alert_custom('<b>' + allUsers[i].UserName + '</b> находиться в чате.');
+                    //else
+                    //    alert_custom('<b>' + allUsers[i].UserName + '</b> присоединился к чату.');
                 }
                 // Add Existing Messages
                 for (i = 0; i < messages.length; i++) {
                     AddMessage(messages[i].UserName, messages[i].Message);
                 }
+
             }
 
             // On New User Connected
@@ -193,15 +214,9 @@
 
             // On User Disconnected
             chatHub.client.onUserDisconnected = function (id, userName) {
-                if (userId != id) {
+                if (userId != id && document.getElementById(id) !== null) {
                     document.getElementById(id).remove();
-                    let disc = document.createElement('div');
-                    disc.classList.add('disconnect-user');
-                    disc.innerHTML ='<b>' + userName + '</b>   покинул чат.';
-                    hideDisplay(disc);
-                    divusers.prepend(disc);
-                    fadeInJS(disc);
-                    delayJS(2000).then(() => faedOutJS(disc));
+                    alert_custom('<b>' + userName + '</b>   покинул чат.');
                 }
             }
             chatHub.client.messageReceived = function (userName, message) {
@@ -214,8 +229,10 @@
             code.setAttribute('id', id);
             code.classList.add('user');
             code.innerHTML = name;
-            if (userId != id)
+            if (userId != id) {
                 divusers.append(code);
+                alert_custom('<b>' + name + '</b> присоединился к чату.');
+            }
         }
 
         function AddMessage(userName, message) {

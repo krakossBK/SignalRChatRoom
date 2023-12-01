@@ -19,6 +19,7 @@ body { padding: 0px; margin: 0px; }
         .chatRoom .messageBar .textbox { width: 550px; }
 .disconnect { position: absolute; margin: 10px; background-color: #ffcbcb; padding: 4px; border: solid 1px red; }
 .disconnect-user { position: fixed; background-color: #e7ffcb; padding: 26px; border-bottom: solid 1px #0093ff; width: 100%; top: 0px; left: 0px; height: 20px; text-align: center; }
+.alert-connect-user { position: fixed; background-color: #e7ffcb; padding: 26px; border-bottom: solid 1px #0093ff; width: 100%; top: 0px; left: 0px; height: 20px; text-align: center; }
 .draggable { position: absolute; border: #5f9482 solid 1px !important; width: 350px; left: 50px }
     .draggable .header { cursor: move; background-color: #d7e5e4; border-bottom: #5f9482 solid 1px; color: #1e4638; }
     .draggable .selText { color: black; padding: 4px; }

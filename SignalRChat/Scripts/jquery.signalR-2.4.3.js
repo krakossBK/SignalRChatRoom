@@ -9,8 +9,7 @@
  *
  */
 
-/// <reference path="Scripts/jquery-1.6.4.js" />
-/// <reference path="jquery.signalR.version.js" />
+/// <reference path="jquery-3.7.1.js" />
 (function ($, window, undefined) {
 
     var resources = {
@@ -166,14 +165,14 @@
             var version,
                 matches;
 
-            if (window.navigator.appName === 'Microsoft Internet Explorer') {
-                // Check if the user agent has the pattern "MSIE (one or more numbers).(one or more numbers)";
-                matches = /MSIE ([0-9]+\.[0-9]+)/.exec(window.navigator.userAgent);
+            //if (window.navigator.appName === 'Microsoft Internet Explorer') {
+            //    // Check if the user agent has the pattern "MSIE (one or more numbers).(one or more numbers)";
+            //    matches = /MSIE ([0-9]+\.[0-9]+)/.exec(window.navigator.userAgent);
 
-                if (matches) {
-                    version = window.parseFloat(matches[1]);
-                }
-            }
+            //    if (matches) {
+            //        version = window.parseFloat(matches[1]);
+            //    }
+            //}
 
             // undefined value means not IE
             return version;
